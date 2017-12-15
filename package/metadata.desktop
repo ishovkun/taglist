@@ -3,8 +3,9 @@ Encoding=UTF-8
 Name=Taglist
 Comment=Desktop indicator plasmoid
 Type=Service
+Icon=
 
-X-KDE-Library=plasma_applet_tutorial
+# X-KDE-Library=plasma_applet_tutorial
 X-KDE-ParentApp=
 X-KDE-PluginInfo-Author=ishovkun
 X-KDE-PluginInfo-Email=igshov@gmail.com
