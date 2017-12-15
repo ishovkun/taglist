@@ -1,10 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Tutorial
-Comment=Tutorial on getting started with Plasma 5 plasmoids.
+Name=Taglist
+Comment=Desktop indicator plasmoid
 Type=Service
 
-X-KDE-Library=taglist
+X-KDE-Library=plasma_applet_tutorial
 X-KDE-ParentApp=
 X-KDE-PluginInfo-Author=ishovkun
 X-KDE-PluginInfo-Email=igshov@gmail.com

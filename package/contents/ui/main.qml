@@ -9,17 +9,19 @@ Rectangle {
 /* MouseArea { */
     id: main
     color: "transparent"
-    width: 400
-    height: 400
+    width: desktopGrid.implicitWidth
+    height: desktopGrid.implicitHeight
+    /* width: desktopRepeater.implicitWidth */
+    /* height: desktopRepeater.implicitHeight */
     /* height: implicit */
     /* width: parent.width */
     /* width: Math.floor(height * 3) */
     /* color: "#333333" */
 
     // from thermal monitor widget
-    FontLoader {
-        source: '../../../fonts/fontawesome-webfont-4.3.0.ttf'
-    }
+    /* FontLoader { */
+    /*     source: '../../../fonts/fontawesome-webfont-4.3.0.ttf' */
+    /* } */
 
     PagerModel {
         id: pagerModel
@@ -31,13 +33,14 @@ Rectangle {
     GridLayout {
         id: desktopGrid
 
-        Layout.minimumWidth: implicitWidth
-        Layout.minimumHeight: implicitHeight
+        Layout.minimumWidth: desktopRepeater.implicitWidth
+        Layout.minimumHeight: desktopRepeater.implicitHeight
         // this should be if text then lefttoright else center (not necessary)
         flow: GridLayout.LeftToRight
 
-        anchors.top: parent.top
-        anchors.left: parent.left
+        /* anchors.top: parent.top */
+        /* anchors.left: parent.left */
+        anchors.centerIn: parent
 
 
         Repeater {
@@ -46,12 +49,11 @@ Rectangle {
 
             Rectangle {
                 id: desktopBackground
-                border.color: 'transparent'
+                border.color: "transparent"
                 width: desktopLabel.implicitWidth
                 height: desktopLabel.implicitHeight + units.smallSpacing
-                /* height: 40 */
                 visible: true
-                color: "green"
+                color: "transparent"
                 property int desktopId: index
                 property bool active: (index == pagerModel.currentPage)
                 property bool hovered: false
@@ -61,7 +63,6 @@ Rectangle {
                     anchors.fill: parent
                     width: parent.width
                     hoverEnabled : true
-                    /* onClicked: pagerModel.changePage(desktopId); */
                     onEntered: {
                         hovered = true;
                     }
@@ -79,6 +80,8 @@ Rectangle {
                 PlasmaComponents.Label {
                     id: desktopLabel
                     font.family: 'FontAwesome'
+                    anchors.centerIn: parent
+                    /* Layout.alignment: Qt.AlignTop */
                     color: {
                         if (active)
                             return theme.highlightColor
