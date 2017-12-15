@@ -75,18 +75,17 @@ Rectangle {
                     onExited: {
                         hovered = false;
                     }
-                    onClicked: {console.log("cacas")}
-                    /* onPressed: {console.log("cacas1")} */
+                    onClicked: {
+                        console.log("cacas")
+                        onClicked: pagerModel.changePage(desktopId);
+                    }
 
                 } // end desktopMouseArea
 
                 PlasmaComponents.Label {
                     id: desktopLabel
                     font.family: 'FontAwesome'
-                    /* color: active ? theme.highlightColor : theme.textColor */
                     color: {
-                        /* return theme.textColor */
-                        /* if (desktop.active) */
                         if (active)
                             return theme.highlightColor
                         else {
