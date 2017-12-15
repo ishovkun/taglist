@@ -55,10 +55,7 @@ Rectangle {
                 property int desktopId: index
                 property bool active: (index == pagerModel.currentPage)
                 property bool hovered: false
-                /* border.width: Math.round(units.devicePixelRatio) */
-                /* width: appmenuButtonTitle.implicitWidth + units.smallSpacing * 3 */
-                /* color: menuOpened ? theme.highlightColor : 'transparent' */
-                /* radius: units.smallSpacing / 2 */
+
                 MouseArea {
                     id: desktopMouseArea
                     anchors.fill: parent
