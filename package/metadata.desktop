@@ -1,0 +1,19 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Tutorial
+Comment=Tutorial on getting started with Plasma 5 plasmoids.
+Type=Service
+
+X-KDE-Library=taglist
+X-KDE-ParentApp=
+X-KDE-PluginInfo-Author=ishovkun
+X-KDE-PluginInfo-Email=igshov@gmail.com
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-Name=org.kde.taglist
+X-KDE-PluginInfo-Version=2.0
+X-KDE-PluginInfo-Website=github.com
+X-KDE-ServiceTypes=Plasma/Applet
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
+X-Plasma-RemoteLocation=
+X-KDE-PluginInfo-Category=Windows and Tasks
