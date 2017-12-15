@@ -5,15 +5,16 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.private.pager 2.0
 
-/* Item { */
-MouseArea {
+Rectangle {
+/* MouseArea { */
     id: main
-    width: parent.width
-    /* PlasmaComponents.Label { */
-    /*     Layout.minimumWidth : plasmoid.formFactor == PlasmaCore.Types.Horizontal ? height : 1 */
-    /*     Layout.minimumHeight : plasmoid.formFactor == PlasmaCore.Types.Vertical ? width  : 1 */
-    /*     text: "Hello world in Plasma 5 "; */
-    /* } */
+    color: "transparent"
+    width: 400
+    height: 400
+    /* height: implicit */
+    /* width: parent.width */
+    /* width: Math.floor(height * 3) */
+    /* color: "#333333" */
 
     // from thermal monitor widget
     FontLoader {
@@ -22,14 +23,8 @@ MouseArea {
 
     PagerModel {
         id: pagerModel
-
         showDesktop: true
         enabled: true
-
-        /* showDesktop: (plasmoid.configuration.currentDesktopSelected == 1) */
-        /* showOnlyCurrentScreen: plasmoid.configuration.showOnlyCurrentScreen */
-        /* screenGeometry: plasmoid.screenGeometry */
-
         pagerType: PagerModel.VirtualDesktops
     }
 
@@ -38,6 +33,7 @@ MouseArea {
 
         Layout.minimumWidth: implicitWidth
         Layout.minimumHeight: implicitHeight
+        // this should be if text then lefttoright else center (not necessary)
         flow: GridLayout.LeftToRight
 
         anchors.top: parent.top
@@ -48,54 +44,53 @@ MouseArea {
             id: desktopRepeater
             model: pagerModel
 
-            PlasmaCore.ToolTipArea {
-                id: desktop
+            Rectangle {
+                id: desktopBackground
+                border.color: 'transparent'
                 property int desktopId: index
                 property bool active: (index == pagerModel.currentPage)
-
-                /* readonly property int buttonIndex: index */
-                readonly property int pagerColumns: {
-                    if (!pagerModel.count) {
-                        return 1;
-                    }
-                    /* return Math.ceil(pagerModel.count / effectiveRows); */
-                    return pagerModel.count;
-                }
-
+                property bool hovered: false
+                /* border.color: "green" */
+                /* color: theme.textColor */
+                /* width: desktopLabel.width */
+                width: 40
+                height: 40
+                z: 1000
+                visible: true
+                color: "red"
+                border.width: Math.round(units.devicePixelRatio)
+                /* width: appmenuButtonTitle.implicitWidth + units.smallSpacing * 3 */
+                /* height: appmenuFillHeight ? appmenu.height : appmenuButtonTitle.implicitHeight + units.smallSpacing */
+                /* color: menuOpened ? theme.highlightColor : 'transparent' */
+                /* radius: units.smallSpacing / 2 */
                 MouseArea {
                     id: desktopMouseArea
                     anchors.fill: parent
                     width: parent.width
                     hoverEnabled : true
-                    onClicked: pagerModel.changePage(desktopId);
+                    /* onClicked: pagerModel.changePage(desktopId); */
+                    onEntered: {
+                        hovered = true;
+                    }
+                    onExited: {
+                        hovered = false;
+                    }
+                    onClicked: {console.log("cacas")}
+                    /* onPressed: {console.log("cacas1")} */
+
                 } // end desktopMouseArea
-
-                Rectangle {
-                    id: desktopBackground
-                    /* border.color: 'transparent' */
-                    /* border.color: 'green' */
-                    color: theme.textColor
-                    width: 30
-                    visible: true
-                    border.width: Math.round(units.devicePixelRatio)
-                    /* width: appmenuButtonTitle.implicitWidth + units.smallSpacing * 3 */
-                    /* height: appmenuFillHeight ? appmenu.height : appmenuButtonTitle.implicitHeight + units.smallSpacing */
-                    /* color: menuOpened ? theme.highlightColor : 'transparent' */
-                    /* radius: units.smallSpacing / 2 */
-                }  // end desktopBackground
-
 
                 PlasmaComponents.Label {
                     id: desktopLabel
-                    property int desktopId: index
-                    property bool active: (index == pagerModel.currentPage)
                     font.family: 'FontAwesome'
                     /* color: active ? theme.highlightColor : theme.textColor */
                     color: {
-                        if (desktop.active)
+                        /* return theme.textColor */
+                        /* if (desktop.active) */
+                        if (active)
                             return theme.highlightColor
                         else {
-                            if (model.IsActive == true)
+                            if (hovered)
                                 return theme.highlightColor
                             else
                                 return theme.textColor
@@ -107,7 +102,10 @@ MouseArea {
                     /* text: index + 1 */
                     /* text: plasmoid.configuration.displayedText ? model.display : index + 1 */
                 }  // end label
-            } //end tooltip
+                }  // end desktopBackground
+
+
+            /* } //end tooltip */
         } // end Repeater
     } // end desktopGrid
 }
