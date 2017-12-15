@@ -47,20 +47,16 @@ Rectangle {
             Rectangle {
                 id: desktopBackground
                 border.color: 'transparent'
+                width: desktopLabel.implicitWidth
+                height: desktopLabel.implicitHeight + units.smallSpacing
+                /* height: 40 */
+                visible: true
+                color: "green"
                 property int desktopId: index
                 property bool active: (index == pagerModel.currentPage)
                 property bool hovered: false
-                /* border.color: "green" */
-                /* color: theme.textColor */
-                /* width: desktopLabel.width */
-                width: 40
-                height: 40
-                z: 1000
-                visible: true
-                color: "red"
-                border.width: Math.round(units.devicePixelRatio)
+                /* border.width: Math.round(units.devicePixelRatio) */
                 /* width: appmenuButtonTitle.implicitWidth + units.smallSpacing * 3 */
-                /* height: appmenuFillHeight ? appmenu.height : appmenuButtonTitle.implicitHeight + units.smallSpacing */
                 /* color: menuOpened ? theme.highlightColor : 'transparent' */
                 /* radius: units.smallSpacing / 2 */
                 MouseArea {
@@ -76,8 +72,9 @@ Rectangle {
                         hovered = false;
                     }
                     onClicked: {
-                        console.log("cacas")
-                        onClicked: pagerModel.changePage(desktopId);
+                        /* console.log("clicked") */
+                        if (active == false)
+                            onClicked: pagerModel.changePage(desktopId);
                     }
 
                 } // end desktopMouseArea
