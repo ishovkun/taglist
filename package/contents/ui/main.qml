@@ -6,21 +6,21 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.private.pager 2.0
 
 Rectangle {
-/* MouseArea { */
     id: root
     color: "transparent"
-    width: desktopGrid.implicitWidth
+    width: desktopRow.width
     height: parent == null ? desktopGrid.implicitHeight : parent.height
 
     Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
 
-    anchors.fill: parent
-    /* Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 10 */
-    /* Layout.minimumHeight: theme.mSize(theme.defaultFont).height * 15 */
-    // from thermal monitor widget
-    /* FontLoader { */
-    /*     source: '../../../fonts/fontawesome-webfont-4.3.0.ttf' */
-    /* } */
+    Layout.preferredWidth: desktopRow.width
+    Layout.minimumWidth : desktopRow.width
+    Layout.minimumHeight: desktopRepeater.implicitHeight
+    Layout.maximumWidth : desktopRow.width
+
+    FontLoader {
+        source: '../../fonts/fontawesome-webfont-4.3.0.ttf'
+    }
 
     PagerModel {
         id: pagerModel
@@ -31,75 +31,85 @@ Rectangle {
 
     GridLayout {
         id: desktopGrid
+        /* rows: 1 */
+        Layout.minimumWidth : width + spacing
+        Layout.minimumHeight: implicitHeight
 
-        Layout.minimumWidth: desktopRepeater.implicitWidth
-        Layout.minimumHeight: desktopRepeater.implicitHeight
+        /* Layout.fillWidth: root.vertical */
         // this should be if text then lefttoright else center (not necessary)
-        flow: GridLayout.LeftToRight
+        /* flow: GridLayout.LeftToRight */
 
         /* anchors.top: parent.top */
         /* anchors.left: parent.left */
         anchors.centerIn: parent
+        /* anchors.rightMargin: spacing */
+        /* anchors.fill: parent */
 
-        Repeater {
-            id: desktopRepeater
-            model: pagerModel
+        Row {
+            id: desktopRow
+            spacing: 5
+            anchors.rightMargin: spacing
+            /* width: (desktopRepeater.count+1)*desktopBackground.width */
 
-            Rectangle {
-                id: desktopBackground
-                border.color: "transparent"
-                width: desktopLabel.implicitWidth
-                height: desktopLabel.implicitHeight + units.smallSpacing
-                visible: true
-                color: "transparent"
-                property int desktopId: index
-                property bool active: (index == pagerModel.currentPage)
-                property bool hovered: false
+            Repeater {
+                id: desktopRepeater
+                model: pagerModel
+                /* anchors.centerIn: parent */
 
-                MouseArea {
-                    id: desktopMouseArea
-                    anchors.fill: parent
-                    width: parent.width
-                    hoverEnabled : true
-                    onEntered: {
-                        hovered = true;
-                    }
-                    onExited: {
-                        hovered = false;
-                    }
-                    onClicked: {
-                        /* console.log("clicked") */
-                        if (active == false)
-                            onClicked: pagerModel.changePage(desktopId);
-                    }
+                Rectangle {
+                    id: desktopBackground
+                    border.color: "transparent"
+                    /* border.color: "green" */
+                    color: "transparent"
+                    width: desktopLabel.implicitWidth
+                    height: desktopLabel.implicitHeight + units.smallSpacing
+                    visible: true
+                    property int desktopId: index
+                    property bool active: (index == pagerModel.currentPage)
+                    property bool hovered: false
 
-                } // end desktopMouseArea
-
-                PlasmaComponents.Label {
-                    id: desktopLabel
-                    font.family: 'FontAwesome'
-                    anchors.centerIn: parent
-                    /* Layout.alignment: Qt.AlignTop */
-                    color: {
-                        if (active)
-                            return theme.highlightColor
-                        else {
-                            if (hovered)
-                                return theme.highlightColor
-                            else
-                                return theme.textColor
+                    MouseArea {
+                        id: desktopMouseArea
+                        anchors.fill: parent
+                        width: parent.width
+                        hoverEnabled : true
+                        onEntered: {
+                            hovered = true;
                         }
-                    }
-                    /* verticalAlignment: Text.AlignCenter */
-                    /* text: model.display */
-                    text: '\uf111'
-                    /* text: index + 1 */
-                    /* text: plasmoid.configuration.displayedText ? model.display : index + 1 */
-                }  // end label
+                        onExited: {
+                            hovered = false;
+                        }
+                        onClicked: {
+                            /* console.log("clicked") */
+                            if (active == false)
+                                onClicked: pagerModel.changePage(desktopId);
+                        }
+
+                    } // end desktopMouseArea
+
+                    PlasmaComponents.Label {
+                        id: desktopLabel
+                        anchors.centerIn: parent
+                        font.family: 'FontAwesome'
+
+                        color: {
+                            if (active)
+                                return theme.highlightColor
+                            else {
+                                if (hovered)
+                                    return theme.highlightColor
+                                else
+                                    return theme.textColor
+                            }
+                        }
+
+                        /* text: model.display */
+                        text: '\uf111'
+                        /* text: index + 1 */
+
+                    }  // end label
                 }  // end desktopBackground
-
-
-            /* } //end tooltip */
+            } // end row
         } // end Repeater
     } // end desktopGrid
 }
