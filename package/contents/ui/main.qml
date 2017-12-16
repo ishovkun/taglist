@@ -22,8 +22,19 @@ Rectangle {
     property bool showCustomLabel: false
     property bool showCircle: true
 
+    Connections {
+        target: plasmoid.configuration
+        onBoardSizeChanged: {
+            console.log("config changed")
+            /* main.fillBoard(); */
+            /* solvedImage.update(); */
+        }
+    }
+    /* Component.onCompleted: { */
+    /*     plasmoid.addEventListener('ConfigChanged', Config.configChanged); */
+    /* } */
+
     FontLoader {
-        /* source: '../../fonts/fontawesome-webfont-4.3.0.ttf' */
         source: '../../fonts/fontawesome-webfont.ttf'
     }
 
