@@ -18,8 +18,13 @@ Rectangle {
     Layout.minimumHeight: desktopRepeater.implicitHeight
     Layout.maximumWidth : desktopRow.width
 
+    property bool showDesktopName: false
+    property bool showCustomLabel: false
+    property bool showCircle: true
+
     FontLoader {
-        source: '../../fonts/fontawesome-webfont-4.3.0.ttf'
+        /* source: '../../fonts/fontawesome-webfont-4.3.0.ttf' */
+        source: '../../fonts/fontawesome-webfont.ttf'
     }
 
     PagerModel {
@@ -31,7 +36,7 @@ Rectangle {
 
     GridLayout {
         id: desktopGrid
-        Layout.minimumWidth : width + spacing
+        Layout.minimumWidth : width
         Layout.minimumHeight: implicitHeight
 
         // this should be if text then lefttoright else center (not necessary)
@@ -42,7 +47,8 @@ Rectangle {
         // Row fixes the thing with labels overlap
         Row {
             id: desktopRow
-            spacing: units.smallSpacing*2
+            /* spacing: units.smallSpacing*2 */
+            spacing: 0
 
             Repeater {
                 id: desktopRepeater
@@ -53,8 +59,18 @@ Rectangle {
                     id: desktopBackground
                     border.color: "transparent"
                     /* border.color: "green" */
-                    color: "transparent"
-                    width: desktopLabel.implicitWidth
+                    color: {
+                        if (showCircle)
+                            return "transparent"
+                        else {
+                            if (active || hovered)
+                                return theme.highlightColor
+                            else
+                                return "transparent"
+                        }
+                    }
+
+                    width: desktopLabel.implicitWidth + units.smallSpacing*2
                     height: desktopLabel.implicitHeight + units.smallSpacing
                     visible: true
                     property int desktopId: index
@@ -86,19 +102,38 @@ Rectangle {
                         font.family: 'FontAwesome'
 
                         color: {
-                            if (active)
-                                return theme.highlightColor
-                            else {
-                                if (hovered)
+                            if (showCircle) {
+                                if (active || hovered)
                                     return theme.highlightColor
                                 else
                                     return theme.textColor
                             }
+                            else
+                                return theme.textColor
                         }
 
-                        /* text: model.display */
-                        text: '\uf111'
-                        /* text: index + 1 */
+                        text: {
+                            if (showCircle)
+                                return '\uf111'
+                            else if (showDesktopName)
+                                return model.display
+                            /* text: index + 1 */
+                        }
+
+                    }  // end label
+
+                    PlasmaComponents.Label {
+                        id: desktopBackgroundCircle
+                        anchors.centerIn: parent
+                        font.family: 'FontAwesome'
+
+                        color: {
+                                return theme.textColor
+                        }
+
+                        text: {
+                            return '\uf268'
+                        }
 
                     }  // end label
                 }  // end desktopBackground
