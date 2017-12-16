@@ -11,8 +11,10 @@ This plasmoid doesn't currently offer any customization. Furthermore, it
 is intended to be used in a vertical panel only.
 
 ## Installation
-Later there will be a proper mechanism. As this package is in an early development
-stage, I just use the following command from the root of the project:
+Later there will be a proper mechanism.
+At the moment, do the following:
 ```
+git clone https://github.com/ishovkun/taglist
+cd taglist
 kpackagetool5 -t Plasma/Applet --install package
 ```
