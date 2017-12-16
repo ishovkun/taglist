@@ -7,17 +7,16 @@ import org.kde.plasma.private.pager 2.0
 
 Rectangle {
 /* MouseArea { */
-    id: main
+    id: root
     color: "transparent"
     width: desktopGrid.implicitWidth
-    height: desktopGrid.implicitHeight
-    /* width: desktopRepeater.implicitWidth */
-    /* height: desktopRepeater.implicitHeight */
-    /* height: implicit */
-    /* width: parent.width */
-    /* width: Math.floor(height * 3) */
-    /* color: "#333333" */
+    height: parent == null ? desktopGrid.implicitHeight : parent.height
 
+    Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
+
+    anchors.fill: parent
+    /* Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 10 */
+    /* Layout.minimumHeight: theme.mSize(theme.defaultFont).height * 15 */
     // from thermal monitor widget
     /* FontLoader { */
     /*     source: '../../../fonts/fontawesome-webfont-4.3.0.ttf' */
@@ -41,7 +40,6 @@ Rectangle {
         /* anchors.top: parent.top */
         /* anchors.left: parent.left */
         anchors.centerIn: parent
-
 
         Repeater {
             id: desktopRepeater
