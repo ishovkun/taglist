@@ -18,3 +18,6 @@ git clone https://github.com/ishovkun/taglist
 cd taglist
 kpackagetool5 -t Plasma/Applet --install package
 ```
+
+## Acknowledgments
+Thanks to the authors of the Font Awesome.
