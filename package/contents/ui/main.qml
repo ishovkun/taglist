@@ -31,25 +31,18 @@ Rectangle {
 
     GridLayout {
         id: desktopGrid
-        /* rows: 1 */
         Layout.minimumWidth : width + spacing
         Layout.minimumHeight: implicitHeight
 
-        /* Layout.fillWidth: root.vertical */
         // this should be if text then lefttoright else center (not necessary)
         /* flow: GridLayout.LeftToRight */
 
-        /* anchors.top: parent.top */
-        /* anchors.left: parent.left */
         anchors.centerIn: parent
-        /* anchors.rightMargin: spacing */
-        /* anchors.fill: parent */
 
+        // Row fixes the thing with labels overlap
         Row {
             id: desktopRow
-            spacing: 5
-            anchors.rightMargin: spacing
-            /* width: (desktopRepeater.count+1)*desktopBackground.width */
+            spacing: units.smallSpacing*2
 
             Repeater {
                 id: desktopRepeater
