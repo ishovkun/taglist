@@ -22,17 +22,32 @@ Rectangle {
     property bool showCustomLabel: false
     property bool showCircle: true
 
-    Connections {
-        target: plasmoid.configuration
-        onBoardSizeChanged: {
-            console.log("config changed")
-            /* main.fillBoard(); */
-            /* solvedImage.update(); */
+    function loadConfig() {
+        var t = plasmoid.configuration.indicatorType
+        if (t == "Circle") {
+            showDesktopName = false
+            showCustomLabel = false
+            showCircle = true
+        }
+        else if (t == "Desktop name") {
+            showDesktopName = true
+            showCustomLabel = false
+            showCircle = false
+
         }
     }
-    /* Component.onCompleted: { */
-    /*     plasmoid.addEventListener('ConfigChanged', Config.configChanged); */
-    /* } */
+
+    Component.onCompleted: {
+        loadConfig()
+    }
+
+    Connections {
+        target: plasmoid.configuration
+        onIndicatorTypeChanged: {
+            /* console.log("config changed") */
+            loadConfig()
+        }
+    }
 
     FontLoader {
         source: '../../fonts/fontawesome-webfont.ttf'
@@ -133,20 +148,20 @@ Rectangle {
 
                     }  // end label
 
-                    PlasmaComponents.Label {
-                        id: desktopBackgroundCircle
-                        anchors.centerIn: parent
-                        font.family: 'FontAwesome'
+                    /* PlasmaComponents.Label { */
+                    /*     id: desktopBackgroundCircle */
+                    /*     anchors.centerIn: parent */
+                    /*     font.family: 'FontAwesome' */
 
-                        color: {
-                                return theme.textColor
-                        }
+                    /*     color: { */
+                    /*             return theme.textColor */
+                    /*     } */
 
-                        text: {
-                            return '\uf268'
-                        }
+                    /*     text: { */
+                    /*         return '\uf268' */
+                    /*     } */
 
-                    }  // end label
+                    /* }  // end label */
                 }  // end desktopBackground
             } // end row
         } // end Repeater
