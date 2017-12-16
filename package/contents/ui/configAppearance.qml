@@ -1,8 +1,5 @@
 /*
- * Copyright 2013  Bhushan Shah <bhush94@gmail.com>
- * Copyright 2013 Sebastian Kügler <sebas@kde.org>
- * Copyright 2014 Kai Uwe Broulik <kde@privat.broulik.de>
- * Copyright 2014 Jeremy Whiting <jpwhiting@kde.org>
+ * Copyright 2017  Igor Shovkun <igshov@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -63,7 +60,7 @@ Item {
                         id: cbItems
                         ListElement { text: "Circle"}
                         ListElement { text: "Desktop name"}
-                        ListElement { text: "Custom label"}
+                        /* ListElement { text: "Custom label"} */
                     }
 
                     onCurrentIndexChanged:

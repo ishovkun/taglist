@@ -3,6 +3,7 @@ Got tired of the default Plasma Pager? Me too! That is why, inspired by panels
 in tiling window managers, I made this plasmoid.
 
 ![Screenshot](Screenshots/Screenshot.png)
+![Screenshot](Screenshots/Screenshot1.png)
 
 
 ## Note to users
