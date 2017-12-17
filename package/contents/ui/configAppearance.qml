@@ -20,9 +20,11 @@
 
 import QtQuick 2.0
 import QtQuick.Controls 1.2 as QtControls
-import QtQuick.Layouts 1.0 as QtLayouts
+import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.1 as QtLayouts
 import QtQuick.Dialogs 1.2 as QtDialogs
 import org.kde.kquickcontrols 2.0 as KQC
+
 
 Item {
     id: appearancePage
@@ -30,121 +32,63 @@ Item {
     height: childrenRect.height
 
     property alias cfg_indicatorType: indicatorTypeBox.indicatorType
-    /* property alias cfg_boardSize: sizeSpinBox.value */
-    /* property alias cfg_boardColor: pieceColorPicker.color */
-    /* property alias cfg_numberColor: numberColorPicker.color */
-    /* property alias cfg_showNumerals: showNumeralsCheckBox.checked */
-
-    /* property alias cfg_useImage: useImageCheckBox.checked */
-    /* property alias cfg_imagePath: imagePathTextField.text */
+    property alias cfg_customLabels: customLabels.labelsValue
 
     QtLayouts.ColumnLayout {
+        width: appearancePage.width
+
         QtControls.GroupBox {
+            width: appearancePage.width
             title: i18n("Appearance")
             flat: true
+            anchors.fill: parent
 
             QtLayouts.GridLayout {
                 columns: 2
-                anchors.left: parent.left
-                anchors.leftMargin: units.largeSpacing
+                /* anchors.fill: parent */
 
                 QtControls.Label {
                     text: i18n("Indicator type")
+                    width: appearancePage.width/2
                 }
 
                 QtControls.ComboBox {
                     id: indicatorTypeBox
                     property string indicatorType: "Circle"
+                    Layout.minimumWidth : appearancePage.width/2
                     currentIndex: 0
                     model: ListModel {
                         id: cbItems
                         ListElement { text: "Circle"}
                         ListElement { text: "Desktop name"}
-                        /* ListElement { text: "Custom label"} */
+                        ListElement { text: "Custom labels"}
                     }
 
-                    onCurrentIndexChanged:
-                    {
+                    onCurrentIndexChanged: {
                         indicatorType = cbItems.get(currentIndex).text
                         /* console.debug(cbItems.get(currentIndex).text) */
                     }
                 }
 
-                /* QtControls.ExclusiveGroup { */
-                /*     id: plainPiecesGroup */
-                /* } */
+                QtControls.Label {
+                    text: i18n("Custom labels")
+                    /* QtLayouts.Layout.alignment: Qt.AlignRight */
+                }
 
-                /* QtControls.Label { */
-                /*     text: i18n("Size") */
-                /*     QtLayouts.Layout.alignment: Qt.AlignRight */
-                /* } */
+                QtControls.TextField {
+                    id: customLabels
+                    Layout.minimumWidth : appearancePage.width/2
+                    font.family: 'FontAwesome'
+                    text: ", 2, 3, 4, 5, 6, 7"
+                    property string labelsValue: text
 
-                /* QtControls.SpinBox { */
-                /*     id: sizeSpinBox */
-                /* } */
-
-                /* QtControls.Label { */
-                /*     text: i18n("Piece color") */
-                /*     QtLayouts.Layout.alignment: Qt.AlignRight */
-                /* } */
-
-                /* KQC.ColorButton { */
-                /*     id: pieceColorPicker */
-                /* } */
-
-                /* QtControls.Label { */
-                /*     text: i18n("Number color") */
-                /*     QtLayouts.Layout.alignment: Qt.AlignRight */
-                /* } */
-
-                /* KQC.ColorButton { */
-                /*     id: numberColorPicker */
-                /* } */
-
-                /* QtControls.CheckBox { */
-                /*     id: useImageCheckBox */
-                /*     text: i18n("Use custom image") */
-                /*     QtLayouts.Layout.alignment: Qt.AlignRight */
-                /* } */
-
-                /* QtLayouts.RowLayout { */
-                /*     QtControls.TextField { */
-                /*         id: imagePathTextField */
-                /*         QtLayouts.Layout.fillWidth: true */
-                /*         QtLayouts.Layout.minimumWidth: units.gridUnit * 10 */
-                /*         placeholderText: i18n("Path to custom image") */
-                /*         onTextChanged: useImageCheckBox.checked = true */
-                /*     } */
-
-                /*     QtControls.Button { */
-                /*         iconName: "document-open" */
-                /*         tooltip: i18n("Browse...") */
-
-                /*         onClicked: imagePicker.open() */
-
-                /*         QtDialogs.FileDialog { */
-                /*             id: imagePicker */
-
-                /*             title: i18n("Choose an image") */
-
-                /*             folder: shortcuts.pictures */
-
-                /*             // TODO ask QImageReader for supported formats */
-                /*             nameFilters: [ i18n("Image Files (*.png *.jpg *.jpeg *.bmp *.svg *.svgz)") ] */
-
-                /*             onFileUrlChanged: { */
-                /*                 imagePathTextField.text = fileUrl.toString().replace("file://", "") */
-                /*             } */
-                /*         } */
-                /*     } */
-                /* } */
-
-                /* QtControls.CheckBox { */
-                /*     id: showNumeralsCheckBox */
-                /*     QtLayouts.Layout.columnSpan: 2 */
-                /*     text: i18n("Show numerals") */
-                /* } */
-            }
+                    onTextChanged: {
+                        console.debug(text)
+                        /* labelsValue = displayText */
+                        labelsValue = text
+                    }
+                }  // end custom Labels
+            } // end qgridlayout
         }
     }
 }

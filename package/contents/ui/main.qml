@@ -36,11 +36,11 @@ Rectangle {
     Layout.preferredWidth: desktopRow.width
     Layout.minimumWidth : desktopRow.width
     Layout.minimumHeight: desktopRepeater.implicitHeight
-    Layout.maximumWidth : desktopRow.width
 
     property bool showDesktopName: false
     property bool showCustomLabel: false
     property bool showCircle: true
+    property var customLabels
 
     function loadConfig() {
         var t = plasmoid.configuration.indicatorType
@@ -55,15 +55,35 @@ Rectangle {
             showCircle = false
 
         }
+        else if (t == "Custom labels") {
+            showDesktopName = false
+            showCustomLabel = true
+            showCircle = false
+
+        }
+        /* if (showCustomLabel) { */
+        /*     console.log("Showing custom labels") */
+        var label_string = plasmoid.configuration.customLabels
+        console.log(label_string)
+        customLabels = label_string.split(',')
+        /* } */
     }
 
     Component.onCompleted: {
         loadConfig()
+        /* plasmoid.setAction("openKCM", i18n("Configure Desktops..."), "configure"); */
     }
 
     Connections {
         target: plasmoid.configuration
         onIndicatorTypeChanged: {
+            loadConfig()
+        }
+    }
+
+    Connections {
+        target: plasmoid.configuration
+        onCustomLabelsChanged: {
             /* console.log("config changed") */
             loadConfig()
         }
@@ -161,27 +181,16 @@ Rectangle {
                         text: {
                             if (showCircle)
                                 return '\uf111'
-                            else if (showDesktopName)
+                            else if (showCustomLabel == true && customLabels.length > index)
+                                return customLabels[index]
+                            else {
                                 return model.display
+                            }
                             /* text: index + 1 */
                         }
 
                     }  // end label
 
-                    /* PlasmaComponents.Label { */
-                    /*     id: desktopBackgroundCircle */
-                    /*     anchors.centerIn: parent */
-                    /*     font.family: 'FontAwesome' */
-
-                    /*     color: { */
-                    /*             return theme.textColor */
-                    /*     } */
-
-                    /*     text: { */
-                    /*         return '\uf268' */
-                    /*     } */
-
-                    /* }  // end label */
                 }  // end desktopBackground
             } // end row
         } // end Repeater
