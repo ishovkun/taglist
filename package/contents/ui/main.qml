@@ -24,6 +24,7 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.private.pager 2.0
+import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddonsComponents
 
 Rectangle {
     id: root
@@ -69,9 +70,13 @@ Rectangle {
         /* } */
     }
 
+    function action_openKCM() {
+        KQuickControlsAddonsComponents.KCMShell.open("desktop");
+    }
+
     Component.onCompleted: {
         loadConfig()
-        /* plasmoid.setAction("openKCM", i18n("Configure Desktops..."), "configure"); */
+        plasmoid.setAction("openKCM", i18n("Configure Desktops..."), "configure");
     }
 
     Connections {
