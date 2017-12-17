@@ -26,5 +26,12 @@ as names of your desktops. Note that you really need to select the icon from
 that cheatsheet and also that is won't show correctly in the desktop settings
 page, but it will in the plasmoid since it comes bundled with Font Awesome.
 
+## Custom labels feature
+Some people have multi-desktop setups. Let's assume you want separate
+indicators per screen. Since KWin doesn't allow separate
+workspaces (desktops) per screen, that's when this feature comes in handy.
+Just enter the comma-separated labels into the "Custom labels" field and choose
+the "Custom Labels" value into the drow-down list.
+
 ## Acknowledgments
 Thanks to the authors of the Font Awesome.
