@@ -30,8 +30,8 @@ import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddonsComponents
 Rectangle {
     id: root
     color: "transparent"
-    width: desktopRow.width
-    height: parent == null ? desktopGrid.implicitHeight : parent.height
+    /* width: desktopRow.width */
+    /* height: parent == null ? desktopGrid.implicitHeight : parent.height */
 
     Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
 
@@ -66,9 +66,11 @@ Rectangle {
         /* if (showCustomLabel) { */
         /*     console.log("Showing custom labels") */
         var label_string = plasmoid.configuration.customLabels
-        console.log(label_string)
         customLabels = label_string.split(',')
-        /* } */
+        /* console.log(label_string) */
+        /* console.log('gonna be cool') */
+        /* console.log(customLabels[0]=='\uf268') */
+        /* return '\uf111' */
     }
 
     function action_openKCM() {
