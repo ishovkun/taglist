@@ -31,8 +31,8 @@ Item {
     width: childrenRect.width
     height: childrenRect.height
 
-    property alias cfg_indicatorType: indicatorTypeBox.indicatorType
-    property alias cfg_customLabels: customLabels.labelsValue
+    property alias cfg_indicatorType: indicatorTypeBox.currentIndex
+    property alias cfg_customLabels: customLabels.text
 
     QtLayouts.ColumnLayout {
         width: appearancePage.width
@@ -66,8 +66,11 @@ Item {
 
                     onCurrentIndexChanged: {
                         indicatorType = cbItems.get(currentIndex).text
-                        /* console.debug(cbItems.get(currentIndex).text) */
+                        console.debug(currentIndex)
                     }
+                    /* Component.onCompleted: { */
+                    /*     for (i = 0; i < this.model.count; i++) */
+                    /* } */
                 }
 
                 QtControls.Label {
@@ -79,7 +82,8 @@ Item {
                     id: customLabels
                     Layout.minimumWidth : appearancePage.width/2
                     font.family: 'FontAwesome'
-                    text: ", 2, 3, 4, 5, 6, 7"
+                    /* text: ", 2, 3, 4, 5, 6, 7" */
+                    /* text: ", 2, 3, 4, 5, 6, 7" */
                     property string labelsValue: text
 
                     onTextChanged: {

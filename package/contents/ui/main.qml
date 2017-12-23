@@ -18,7 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-import QtQuick 2.0
+import QtQuick 2.1
+/* import QtQuick.Controls 2.1 */
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
@@ -45,18 +46,18 @@ Rectangle {
 
     function loadConfig() {
         var t = plasmoid.configuration.indicatorType
-        if (t == "Circle") {
+        if (t == 0) {
             showDesktopName = false
             showCustomLabel = false
             showCircle = true
         }
-        else if (t == "Desktop name") {
+        else if (t == 1) {
             showDesktopName = true
             showCustomLabel = false
             showCircle = false
 
         }
-        else if (t == "Custom labels") {
+        else if (t == 2) {
             showDesktopName = false
             showCustomLabel = true
             showCircle = false
@@ -124,22 +125,24 @@ Rectangle {
             Repeater {
                 id: desktopRepeater
                 model: pagerModel
-                /* anchors.centerIn: parent */
+
+                /* Rectangle { */
+                    /* id: containment */
+                    /* width: desktopBackground.width */
+                    /* x: 15 */
+                    /* color: 'green' */
+                /* Item { */
+                    /* Layout.preferredWidth: 199 */
+                    /* width: 30 */
+                    /* height: desktopBackground.height */
+                    /* height: 500 */
 
                 Rectangle {
                     id: desktopBackground
                     border.color: "transparent"
                     /* border.color: "green" */
-                    color: {
-                        if (showCircle)
-                            return "transparent"
-                        else {
-                            if (active || hovered)
-                                return theme.highlightColor
-                            else
-                                return "transparent"
-                        }
-                    }
+                    anchors.leftMargin: -30
+                    anchors.rightMargin: 50
 
                     width: desktopLabel.implicitWidth + units.smallSpacing*2
                     height: desktopLabel.implicitHeight + units.smallSpacing
@@ -147,6 +150,16 @@ Rectangle {
                     property int desktopId: index
                     property bool active: (index == pagerModel.currentPage)
                     property bool hovered: false
+                    color: {
+                        if (showCircle)
+                            return "transparent"
+                        else {
+                            if (desktopBackground.active || desktopBackground.hovered)
+                                return theme.highlightColor
+                            else
+                                return "transparent"
+                        }
+                    }
 
                     MouseArea {
                         id: desktopMouseArea
@@ -154,15 +167,15 @@ Rectangle {
                         width: parent.width
                         hoverEnabled : true
                         onEntered: {
-                            hovered = true;
+                            desktopBackground.hovered = true;
                         }
                         onExited: {
-                            hovered = false;
+                            desktopBackground.hovered = false;
                         }
                         onClicked: {
                             /* console.log("clicked") */
-                            if (active == false)
-                                onClicked: pagerModel.changePage(desktopId);
+                            if (desktopBackground.active == false)
+                                onClicked: pagerModel.changePage(desktopBackground.desktopId);
                         }
 
                     } // end desktopMouseArea
@@ -174,7 +187,7 @@ Rectangle {
 
                         color: {
                             if (showCircle) {
-                                if (active || hovered)
+                                if (desktopBackground.active || desktopBackground.hovered)
                                     return theme.highlightColor
                                 else
                                     return theme.textColor
@@ -191,12 +204,12 @@ Rectangle {
                             else {
                                 return model.display
                             }
-                            /* text: index + 1 */
                         }
-
                     }  // end label
 
                 }  // end desktopBackground
+
+            /* } */
             } // end row
         } // end Repeater
     } // end desktopGrid

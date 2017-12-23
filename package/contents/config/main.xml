@@ -4,10 +4,16 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name=""/>
-
   <group name="Appearance">
-    <entry name="indicatorType" type="String">
-      <default>Circle</default>
+    <!-- <entry name="indicatorType" type="String"> -->
+    <!--   <default>Custom labels</default> -->
+    <!--   <!-\- <default>Circle</default> -\-> -->
+    <!--   <!-\- <default>Desktop name</default> -\-> -->
+    <!-- </entry> -->
+    <entry name="indicatorType" type="Int">
+      <default>2</default>
+      <!-- <default>Circle</default> -->
+      <!-- <default>Desktop name</default> -->
     </entry>
     <entry name="customLabels" type="String">
       <default>, 2, 3, 4, 5, 6, 7</default>
@@ -31,5 +37,4 @@
     <!--     <default>4</default> -->
     <!-- </entry> -->
   </group>
-
 </kcfg>
