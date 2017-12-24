@@ -3,7 +3,7 @@ Encoding=UTF-8
 Name=Taglist
 Comment=Desktop indicator plasmoid
 Type=Service
-Icon=
+Icon=user-desktop
 
 # X-KDE-Library=plasma_applet_tutorial
 X-KDE-ParentApp=
