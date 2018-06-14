@@ -43,6 +43,7 @@ Rectangle {
     property bool showCustomLabel: false
     property bool showCircle: true
     property var customLabels
+    property int fontSize
 
     function loadConfig() {
         var t = plasmoid.configuration.indicatorType
@@ -68,9 +69,18 @@ Rectangle {
         var label_string = plasmoid.configuration.customLabels
         customLabels = label_string.split(',')
         /* console.log(label_string) */
-        /* console.log('gonna be cool') */
+
+        fontSize = plasmoid.configuration.fontSize
+        // console.log(label_string)
+        console.log("font size: ", fontSize)
+
+        /* if (fontloader.status != FontLoader.Ready) */
+        // console.log(faLoader.status)
         /* console.log(customLabels[0]=='\uf268') */
         /* return '\uf111' */
+        /* FontLoader { */
+        /*     source: '../../fonts/fontawesome-webfont.ttf' */
+        /* } */
     }
 
     function action_openKCM() {
@@ -97,8 +107,11 @@ Rectangle {
         }
     }
 
-    FontLoader {
-        source: '../../fonts/fontawesome-webfont.ttf'
+    Connections {
+        target: plasmoid.configuration
+        onFontSizeChanged: {
+            loadConfig()
+        }
     }
 
     PagerModel {
@@ -106,6 +119,12 @@ Rectangle {
         showDesktop: true
         enabled: true
         pagerType: PagerModel.VirtualDesktops
+    }
+
+    FontLoader {
+        id: faLoader
+        source: '../../fonts/fontawesome-webfont.ttf'
+        onStatusChanged: if (fontloader.status == FontLoader.Ready) loadConfig()
     }
 
     GridLayout {
@@ -185,7 +204,10 @@ Rectangle {
                     PlasmaComponents.Label {
                         id: desktopLabel
                         anchors.centerIn: parent
-                        font.family: 'FontAwesome'
+
+                        /* font.family: 'FontAwesome' */
+                        font.family: faLoader.name
+                        font.pixelSize: fontSize
 
                         color: {
                             if (showCircle) {

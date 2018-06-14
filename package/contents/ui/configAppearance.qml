@@ -28,20 +28,22 @@ import org.kde.kquickcontrols 2.0 as KQC
 
 Item {
     id: appearancePage
-    width: childrenRect.width
-    height: childrenRect.height
+    // width: childrenRect.width
+    // height: childrenRect.height
 
     property alias cfg_indicatorType: indicatorTypeBox.currentIndex
-    property alias cfg_customLabels: customLabels.text
+    property alias cfg_customLabels:  customLabels.text
+    // property alias cfg_fontSize:      fontSizeBox.fontSizeValue
+    property alias cfg_fontSize:      fontSizeBox.value
 
     QtLayouts.ColumnLayout {
         width: appearancePage.width
 
         QtControls.GroupBox {
-            width: appearancePage.width
+            // width: appearancePage.width
             title: i18n("Appearance")
             flat: true
-            anchors.fill: parent
+            // anchors.fill: parent
 
             QtLayouts.GridLayout {
                 columns: 2
@@ -55,7 +57,7 @@ Item {
                 QtControls.ComboBox {
                     id: indicatorTypeBox
                     property string indicatorType: "Circle"
-                    Layout.minimumWidth : appearancePage.width/2
+                    // Layout.minimumWidth : appearancePage.width/2
                     currentIndex: 0
                     model: ListModel {
                         id: cbItems
@@ -66,32 +68,54 @@ Item {
 
                     onCurrentIndexChanged: {
                         indicatorType = cbItems.get(currentIndex).text
-                        console.debug(currentIndex)
+                        // console.debug(currentIndex)
                     }
-                    /* Component.onCompleted: { */
-                    /*     for (i = 0; i < this.model.count; i++) */
-                    /* } */
                 }
 
+                // custom labels line
                 QtControls.Label {
                     text: i18n("Custom labels")
-                    /* QtLayouts.Layout.alignment: Qt.AlignRight */
                 }
 
                 QtControls.TextField {
                     id: customLabels
                     Layout.minimumWidth : appearancePage.width/2
-                    font.family: 'FontAwesome'
-                    /* text: ", 2, 3, 4, 5, 6, 7" */
+                    FontLoader {
+                        id: fontAwesomeLoader
+                        source: '../../fonts/fontawesome-webfont.ttf'
+                    }
+                    /* font.family: 'FontAwesome' */
+                    font.family: fontAwesomeLoader.name
                     /* text: ", 2, 3, 4, 5, 6, 7" */
                     property string labelsValue: text
 
                     onTextChanged: {
-                        console.debug(text)
+                        // console.debug(text)
                         /* labelsValue = displayText */
                         labelsValue = text
                     }
                 }  // end custom Labels
+
+                // font size line
+                QtControls.Label {
+                    text: i18n("Font size")
+                    /* QtLayouts.Layout.alignment: Qt.AlignRight */
+                }
+
+                QtControls.SpinBox {
+                    id: fontSizeBox
+                    property int fontSizeValue: value
+                    // value: fontSizeValue
+                    // minimum: 5
+                    // maximum: 50
+
+                    // onEditingFinished: {
+                    onValueChanged: {
+                        fontSizeValue = value
+                        // console.debug(fontSizeValue)
+                    }
+
+                }
             } // end qgridlayout
         }
     }
