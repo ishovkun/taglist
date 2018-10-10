@@ -87,9 +87,18 @@ Rectangle {
         KQuickControlsAddonsComponents.KCMShell.open("desktop");
     }
 
+    function action_refresh() {
+        var current_type = plasmoid.configuration.indicatorType
+        plasmoid.configuration.indicatorType = 0
+        loadConfig()
+        plasmoid.configuration.indicatorType = current_type
+        loadConfig()
+    }
+
     Component.onCompleted: {
         loadConfig()
-        plasmoid.setAction("openKCM", i18n("Configure Desktops..."), "configure");
+        plasmoid.setAction("openKCM", i18n("Configure Desktops..."), "configure")
+        plasmoid.setAction("refresh", i18nc("@action", "Refresh"), "edit-clear")
     }
 
     Connections {
