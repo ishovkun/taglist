@@ -98,7 +98,7 @@ Rectangle {
     Component.onCompleted: {
         loadConfig()
         plasmoid.setAction("openKCM", i18n("Configure Desktops..."), "configure")
-        plasmoid.setAction("refresh", i18nc("@action", "Refresh"), "edit-clear")
+        plasmoid.setAction("refresh", i18nc("@action", "Refresh"), "view-refresh")
     }
 
     Connections {
